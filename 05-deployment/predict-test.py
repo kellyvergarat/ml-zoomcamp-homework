@@ -25,7 +25,8 @@ Steps:
 
 import requests
 
-url = 'http://localhost:9696/predict'
+host = 'https://compute.amazonaws.com/'
+url = f'http://{host}/predict'
 
 customer_id = 'xyz-123'
 customer = {
