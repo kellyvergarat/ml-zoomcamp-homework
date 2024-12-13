@@ -1,13 +1,13 @@
 #import tensorflow.lite as tflite
 import tflite_runtime.interpreter as tflite
-
+import json
 import os
 import numpy as np
 from io import BytesIO
 from urllib import request
 from PIL import Image
 
-file_path = "model_2024_hairstyle.tflite"
+file_path = "model_2024_hairstyle_v2.tflite"
 
 def download_image(url):
     with request.urlopen(url) as resp:
@@ -46,7 +46,12 @@ def predict(url):
     
     preds = interpreter.get_tensor(output_index)
 
-    return float(preds[0,0])
+    # return float(preds[0,0])
+    result = float(preds[0][0])
+    return {
+        'statusCode': 200,
+        'body': json.dumps(result)
+    }
 
 def lambda_handler(event, context):
     url = event['url']
